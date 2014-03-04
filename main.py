@@ -6,6 +6,25 @@ from gradDesc import *
 
 import os
 
+# Extract comma-separated components, convert to tuple
+def componify(vector):
+	temp=""
+	result=[]
+	listignore=(" ", "<", ">", "(", ")")
+
+	for item in vector:
+		if item==",":
+			result.append(temp)
+			temp=""
+		elif item in listignore:
+			continue
+		else:
+			temp+=item
+
+	result.append(temp)
+
+	return tuple(result)
+
 ## --- EXECUTION BEGINS HERE --- ##
 # 1. Prompt user for input        #
 # 2. Set up raw gradient vector,  #
@@ -21,17 +40,22 @@ print "\t  the form (theta1, theta2)."
 print "\t> The 2-D gradient vector consists of: gradF=<Fx, Fy>"
 print "\t> Be sure to explicitly state all multiplication (2x => 2*x)"
 
-gradient = [raw_input("Fx :> ")]
-gradient.append(raw_input("Fy :> "))
+raw_gradient = raw_input("Gradient vector = ")
+theta = raw_input("Theta-pair: ")
+#raw_gradient.append(raw_input("Fy :> "))
 
-theta = [raw_input("theta1 :> ")]
-theta.append(raw_input("theta2 :> "))
+raw_gradient = componify(raw_gradient)
+theta = componify(theta)
+print raw_gradient
 
-# Convert the gradient vector and theta-pair to 2-tuples
-gradient = tuple(gradient)
-theta = tuple(theta)
+#theta.append(raw_input("theta2 :> "))
 
-# DEBUGGING: print out gradient and theta-pair
-print shuntingYard(gradient)
-#print eval(shuntingYard(gradient)[0], (0, 0))
+# Convert the gradient vector and theta-pair to 2-tuples, parse gradient vector
+gradient = shuntingYard(raw_gradient)
+
+# DEBUGGING: Evaluate each component of the gradient
+print "Substituting and evaluating..."
+for comp in gradient:
+	print eval(comp, theta)
+
 print theta

@@ -1,5 +1,8 @@
-OPERATORS = [".", "(",")","^","*","/","+","-"]
-PRECEDENCE = {".":5, "(":4, ")":4, "^":3, "*":2, "/":2, "+":1, "-":1, "":0}
+import operator
+
+OPERATORS = ("(",")","^","*","/","+","-")
+ops = {"^":operator.pow, "*":operator.mul, "/":operator.div, "+":operator.add, "-":operator.sub}
+PRECEDENCE = {"(":4, ")":4, "^":3, "*":2, "/":2, "+":1, "-":1, "":0}
 VARS = ("x", "y")
 
 class Stack:
@@ -19,6 +22,8 @@ class Stack:
 		del self.storage
 	def list(self):
 		return self.storage
+	def size(self):
+		return len(self.storage)
 
 # Based on ad2476/Euler: algexp.cpp
 def shuntingYard(raw_gradient):
@@ -39,7 +44,7 @@ def shuntingYard(raw_gradient):
 			token=comp[i]
 			pos=i # position of last digit in token
 			try:
-				while pos<len(comp) and str.isdigit(comp[pos]):
+				while pos<len(comp) and (str.isdigit(comp[pos]) or comp[pos]=="."):
 					pos+=1
 
 				if (pos-i)!=0:
@@ -95,7 +100,7 @@ def shuntingYard(raw_gradient):
 # theta: (x,y)-point on domain plane
 def eval(expression, theta):
 	values=Stack()
-	operands=[]
+	operands=[0.0, 0.0]
 
 	# Substitute in variables from theta
 	for i, token in enumerate(expression):
@@ -104,7 +109,27 @@ def eval(expression, theta):
 		elif token==VARS[1]:
 			expression[i]=theta[1]
 
-	return expression
+	# Parse tokens
+	for token in expression:
+		if str.isdigit(token): # If it's a number, add to stack of values
+			values.push(float(token))
+		elif token in OPERATORS: # Otherwise it's an operator, evaluate
+			if values.size()<2: # not enough values
+				print "Insufficient values!"
+				return [0]
+
+			# Pop the two operands from the stack
+			operands[1]=values.pop()
+			operands[0]=values.pop()
+
+			values.push(ops[token](operands[0], operands[1]))
+		else:
+			print "OPER ERROR"
+
+	if values.size()==1:
+		return values.pop()
+	else:
+		print "VALUE ERROR"
 
 if __name__ == '__main__':
 	import main
