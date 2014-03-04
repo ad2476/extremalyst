@@ -4,11 +4,15 @@ from shuntingYard import *
 import gradDesc
 from gradDesc import *
 
+import os
+
 ## --- EXECUTION BEGINS HERE --- ##
 # 1. Prompt user for input        #
 # 2. Set up raw gradient vector,  #
 #    theta-pair                   #
 # 3. Parse raw gradient vector    #
+
+os.system("clear")
 
 print "Welcome to the extremalyst! Calculate local minima!\n"
 print "Enter the components of a 2-D gradient vector, along with an initial theta-pair"
