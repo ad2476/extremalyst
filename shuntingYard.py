@@ -1,8 +1,13 @@
+# The shunting yard and evaluation algorithm are based on a previous project,
+# "Euler" (ad2476/Euler). Code in algExp.cpp.
+# NOTE: This very likely inherited a few of the bugs present in that algorithm,
+# and may have introduced some new ones too... NEEDS TO BE THOROUGHLY TESTED
+
 import operator
 
-OPERATORS = ("(",")","^","*","/","+","-")
+OPERATORS = ("[","]","^","*","/","+","-")
 ops = {"^":operator.pow, "*":operator.mul, "/":operator.div, "+":operator.add, "-":operator.sub}
-PRECEDENCE = {"(":4, ")":4, "^":3, "*":2, "/":2, "+":1, "-":1, "":0}
+PRECEDENCE = {"[":4, "]":4, "^":3, "*":2, "/":2, "+":1, "-":1, "":0}
 VARS = ("x", "y")
 
 class Stack:
@@ -34,7 +39,7 @@ def shuntingYard(raw_gradient):
 	# raw_gradient in form: (<string>, <string>)
 	# Parse each <string> as its own algebraic expression
 	for comp in raw_gradient:
-		print "Parsing tokens..."
+		print "[STATUS] Parsing tokens..."
 
 		output=[] # Sequence of constants and operators
 		op_stack=Stack() # Working stack of operators
@@ -50,30 +55,40 @@ def shuntingYard(raw_gradient):
 				if (pos-i)!=0:
 					token=comp[i:pos]
 					output.append(token)
+					if (comp[pos] in VARS) or comp[pos]=="[": # Implied multiplication (e.g. '2x' or '2[x+1]')
+						print "[INFO] Implied coef. multiplication assumed"
+						op_stack.push("*")
 					[iterable.next() for x in xrange(1, pos-i)]
 					continue
-			except Exception, e:
-				print e
-				continue
+			except IndexError, e:
+				pass
 
 			# If token is an operator, add to op_stack
 			if token in OPERATORS:
 				if not op_stack.empty():
 					top=op_stack.top()
 				
-				if token==")":
+				if token=="]":
 					while not op_stack.empty():
 						top=op_stack.pop()
-						if top=="(":
+						if top=="[":
 							break
 
 						output.append(top)
+
+					try:
+						if (comp[i+1] in VARS) or str.isdigit(comp[i+1]): # Implied multiplication (e.g. '[x+1]y')
+							print "[INFO] Implied coef. multiplication assumed"
+							op_stack.push("*")
+					except IndexError, e:
+						pass
+
 					continue
-				elif token=="(":
+				elif token=="[":
 					pass
 				elif PRECEDENCE[top]>PRECEDENCE[token]:
 					op_stack.pop()
-					if top!="(":
+					if top!="[":
 						output.append(top)
 									
 				op_stack.push(token)
@@ -82,15 +97,22 @@ def shuntingYard(raw_gradient):
 				continue
 			elif token in VARS: # It's a variable
 				output.append(token)
+
+				try:
+					if (comp[i+1] in VARS) or comp[i+1]=="[": # Implied multiplication (e.g. 'xy or x[1+y]')
+						print "[INFO] Implied coef. multiplication assumed"
+						op_stack.push("*")				
+				except IndexError, e:
+					pass
 				continue
 
-			print "OP ERROR"
+			print "[ERROR] UNEXPECTED OPERATOR"
 
 		# Pop remaining operators from stack:
 		while not op_stack.empty():
 			top=op_stack.pop()
-			if (top=="(") or (top==")"):
-				print "PARENS ERROR"
+			if (top=="[") or (top=="]"):
+				print "[ERROR] BRACKET MISMATCH"
 			output.append(top)
 
 		gradient.append(output)
@@ -115,7 +137,7 @@ def eval(expression, theta):
 			values.push(float(token))
 		elif token in OPERATORS: # Otherwise it's an operator, evaluate
 			if values.size()<2: # not enough values
-				print "Insufficient values!"
+				print "[ERROR] Insufficient values!"
 				return [0]
 
 			# Pop the two operands from the stack
@@ -124,12 +146,12 @@ def eval(expression, theta):
 
 			values.push(ops[token](operands[0], operands[1]))
 		else:
-			print "OPER ERROR"
+			print "[ERROR] Invalid operator!"
 
 	if values.size()==1:
 		return values.pop()
 	else:
-		print "VALUE ERROR"
+		print "[ERROR] Value mismatch!"
 
 if __name__ == '__main__':
 	import main

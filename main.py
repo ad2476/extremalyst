@@ -38,24 +38,32 @@ print "Enter the components of a 2-D gradient vector, along with an initial thet
 print "\t> A theta-pair is any point on the domain plane of the function F(x,y) in"
 print "\t  the form (theta1, theta2)."
 print "\t> The 2-D gradient vector consists of: gradF=<Fx, Fy>"
-print "\t> Be sure to explicitly state all multiplication (2x => 2*x)"
+print "\t> Be sure vector components and coordinate pairs are comma-separated!"
+print "\t> Use brackets '[ ]' instead of parentheses '( )' within expressions!"
 
-raw_gradient = raw_input("Gradient vector = ")
-theta = raw_input("Theta-pair: ")
-#raw_gradient.append(raw_input("Fy :> "))
+raw_gradient = raw_input("[PROMPT] Gradient vector = ")
+
+if raw_gradient=="quit":
+	quit()
+
+theta = raw_input("[PROMPT] Theta-pair: ")
 
 raw_gradient = componify(raw_gradient)
 theta = componify(theta)
-print raw_gradient
 
-#theta.append(raw_input("theta2 :> "))
+if len(raw_gradient)!=2 or len(theta)!=2:
+	print "[ERROR] Check entered gradient vector or theta-pair"
+	quit()
+
+print raw_gradient,
+print theta
 
 # Convert the gradient vector and theta-pair to 2-tuples, parse gradient vector
 gradient = shuntingYard(raw_gradient)
 
+print gradient
+
 # DEBUGGING: Evaluate each component of the gradient
-print "Substituting and evaluating..."
+print "[STATUS] Substituting and evaluating..."
 for comp in gradient:
 	print eval(comp, theta)
-
-print theta
