@@ -33,4 +33,5 @@ theta = tuple(theta)
 
 # DEBUGGING: print out gradient and theta-pair
 print shuntingYard(gradient)
+#print eval(shuntingYard(gradient)[0], (0, 0))
 print theta

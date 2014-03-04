@@ -17,7 +17,8 @@ class Stack:
 		return not self.storage
 	def erase(self):
 		del self.storage
-
+	def list(self):
+		return self.storage
 
 # Based on ad2476/Euler: algexp.cpp
 def shuntingYard(raw_gradient):
@@ -44,14 +45,14 @@ def shuntingYard(raw_gradient):
 				if (pos-i)!=0:
 					token=comp[i:pos]
 					output.append(token)
-					[iterable.next() for x in range(pos-i)]
+					[iterable.next() for x in xrange(1, pos-i)]
 					continue
 			except Exception, e:
 				print e
 				continue
 
 			# If token is an operator, add to op_stack
-			if OPERATORS.count(token):
+			if token in OPERATORS:
 				if not op_stack.empty():
 					top=op_stack.top()
 				
@@ -74,9 +75,8 @@ def shuntingYard(raw_gradient):
 				continue
 			elif token==" ":
 				continue
-			elif str.isalpha(token): # It's a variable
-				if VARS.count(token):
-					output.append(token)
+			elif token in VARS: # It's a variable
+				output.append(token)
 				continue
 
 			print "OP ERROR"
@@ -91,6 +91,20 @@ def shuntingYard(raw_gradient):
 		gradient.append(output)
 
 	return gradient
+
+# theta: (x,y)-point on domain plane
+def eval(expression, theta):
+	values=Stack()
+	operands=[]
+
+	# Substitute in variables from theta
+	for i, token in enumerate(expression):
+		if token==VARS[0]:
+			expression[i]=theta[0]
+		elif token==VARS[1]:
+			expression[i]=theta[1]
+
+	return expression
 
 if __name__ == '__main__':
 	import main
