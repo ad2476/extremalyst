@@ -130,13 +130,15 @@ def eval(inputted, coords):
 	# Substitute in variables from theta
 	for i, token in enumerate(expression):
 		if token==VARS[0]:
-			expression[i]=str(theta[0])
+			expression[i]=theta[0]
 		elif token==VARS[1]:
-			expression[i]=str(theta[1])
+			expression[i]=theta[1]
 
 	# Parse tokens
 	for token in expression:
-		if str.isdigit(token[0]): # If it's a number, add to stack of values
+		if type(token) is float: # If it's a number, add to stack of values
+			values.push(token)
+		elif str.isdigit(token[0]):
 			values.push(float(token))
 		elif token in OPERATORS: # Otherwise it's an operator, evaluate
 			if values.size()<2: # not enough values
