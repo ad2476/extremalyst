@@ -41,9 +41,13 @@ def gradientDescent(gradient, coords, alpha, num_iters):
 			theta=temp # update theta simultaneously
 			#print theta # May want to disable this debugging since num_iters=1000...
 
-		# Round off theta to 5 decimal points
+		# Check for divergence, also round off theta to 5 decimal points
 		for i in xrange(len(theta)):
-			theta[i]=round(theta[i], 5)
+			if theta[j]>1e10:
+				print "Diverges (alpha="+str(alpha)+")"
+				return tuple(theta)
+			else:
+				theta[i]=round(theta[i], 5)
 
 		return tuple(theta)
 	except OverflowError:
