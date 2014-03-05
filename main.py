@@ -38,10 +38,16 @@ print "\t> The 2-D gradient vector consists of: gradF=<Fx, Fy>"
 print "\t> Be sure vector components and coordinate pairs are comma-separated!"
 print "\t> Use brackets '[ ]' instead of parentheses '( )' within expressions!"
 
-raw_gradient = raw_input("[PROMPT] Gradient vector = ")
+raw_function = raw_input("[PROMPT] F(x,y) = ")
 
-if raw_gradient=="quit":
+if raw_function=="quit":
 	quit()
+
+function = shuntingYard([raw_function, ""])
+function = function[0] # remove the trailing "" list produced by shuntingYard()
+print function
+
+raw_gradient = raw_input("[PROMPT] Gradient vector = ")
 
 theta = raw_input("[PROMPT] Theta-pair: ")
 
@@ -62,8 +68,16 @@ print gradient
 
 # DEBUGGING: Evaluate each component of the gradient
 print "[STATUS] Substituting and evaluating..."
-#for comp in gradient:
-#	print eval(comp, theta)
+print "Initial gradient: ",
+for comp in gradient:
+	print str(eval(comp, theta)) + " ",
+print "\nF"+str(tuple(theta))+" = "+str(eval(function, theta))
 
-print "\n\n\nGRADIENT DESCENT RESULTS:"
-print gradientDescent(gradient, theta, 0.01, 1000)
+descent = gradientDescent(gradient, theta, 0.01, 1000)
+ascent = gradientDescent(gradient, theta, -0.01, 1000)
+if eval(function, descent)<eval(function, ascent):
+	print "\n\n\nGRADIENT DESCENT RESULTS:"
+	print descent
+else:
+	print "\n\n\nGRADIENT ASCENT RESULTS:"
+	print ascent
