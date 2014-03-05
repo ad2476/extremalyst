@@ -47,7 +47,7 @@ def gradientDescent(gradient, coords, alpha, num_iters):
 
 		return tuple(theta)
 	except OverflowError:
-		print "Overflow. Algorithm diverges!"
+		print "OverflowError: Diverges (alpha="+str(alpha)+")"
 		return (sys.float_info.max, sys.float_info.max)
 
 if __name__ == '__main__':
