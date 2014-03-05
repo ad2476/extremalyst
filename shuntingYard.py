@@ -49,6 +49,10 @@ def shuntingYard(Inputted):
 		for i in iterable:
 			token=comp[i]
 			pos=i # position of last digit in token
+
+			#print output
+			#print "\t"+str(op_stack.list())
+
 			try:
 				while pos<len(comp) and (str.isdigit(comp[pos]) or comp[pos]=="."):
 					pos+=1
@@ -71,6 +75,7 @@ def shuntingYard(Inputted):
 
 				if token=="-": # Is this subtraction or a negative symbol?
 					if i==0 or comp[i-1]=="[": # Look behind
+						print "[INFO] Negative number assumed"
 						output.append("-1")
 						op_stack.push("*")
 						continue
@@ -94,7 +99,7 @@ def shuntingYard(Inputted):
 					continue
 				elif token=="[":
 					pass
-				elif PRECEDENCE[top]>PRECEDENCE[token]:
+				elif PRECEDENCE[top]>=PRECEDENCE[token]:
 					op_stack.pop()
 					if top!="[":
 						output.append(top)
