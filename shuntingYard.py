@@ -62,7 +62,7 @@ def shuntingYard(Inputted):
 					[iterable.next() for x in xrange(1, pos-i)]
 					continue
 			except IndexError, e:
-				pass
+				continue
 
 			# If token is an operator, add to op_stack
 			if token in OPERATORS:
@@ -151,12 +151,12 @@ def eval(inputted, coords):
 
 			values.push(ops[token](operands[0], operands[1]))
 		else:
-			print "[ERROR] Invalid operator!"
+			print "[ERROR] Invalid operator: "+str(token)
 
 	if values.size()==1:
 		return values.pop()
 	else:
-		print "[ERROR] Value mismatch!"
+		print "[ERROR] Value mismatch: "+str(values.list())
 
 if __name__ == '__main__':
 	import main
