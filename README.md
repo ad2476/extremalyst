@@ -43,4 +43,4 @@ You know what you're doing. If not, RTFM.
 ### Planned Features:
 * Calculate all absolute extrema over a rectangular bounded region
 * Add support for `e` and `pi`
-* Add support for `ln(x)`, `sin(x)`, `cos(x)`, `tan(x)`
+* Add support for `sqrt(x)`, `ln(x)`, `sin(x)`, `cos(x)`, `tan(x)`
