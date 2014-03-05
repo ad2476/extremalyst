@@ -73,11 +73,11 @@ for comp in gradient:
 	print str(eval(comp, theta)) + " ",
 print "\nF"+str(tuple(theta))+" = "+str(eval(function, theta))
 
-descent = gradientDescent(gradient, theta, 0.01, 1000)
-ascent = gradientDescent(gradient, theta, -0.01, 1000)
-if eval(function, descent)<eval(function, ascent):
-	print "\n\n\nGRADIENT DESCENT RESULTS:"
-	print descent
-else:
-	print "\n\n\nGRADIENT ASCENT RESULTS:"
-	print ascent
+descent = gradientDescent(gradient, theta, 0.001, 1000)
+ascent = gradientDescent(gradient, theta, -0.001, 1000)
+
+print "\n\n\nGRADIENT DESCENT RESULTS:"
+print "F"+str(descent)+" = "+str(computeCost(function,descent))
+
+print "\n\n\nGRADIENT ASCENT RESULTS:"
+print "F"+str(ascent)+" = "+str(computeCost(function,ascent))
