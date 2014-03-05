@@ -42,9 +42,12 @@ raw_function = raw_input("[PROMPT] F(x,y) = ")
 
 if raw_function=="quit":
 	quit()
+elif raw_function=="pass":
+	function=["0"]
+else:
+	function = shuntingYard([raw_function, ""])
+	function = function[0] # remove the trailing "" list produced by shuntingYard()
 
-function = shuntingYard([raw_function, ""])
-function = function[0] # remove the trailing "" list produced by shuntingYard()
 print function
 
 raw_gradient = raw_input("[PROMPT] Gradient vector = ")
