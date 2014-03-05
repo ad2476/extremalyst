@@ -16,11 +16,13 @@ Clone the git repo, run with `python main.py`. For help with this, see below.
 * Mostly working basic CAS (computer algebra system)
 * Parses gradient vector passed in component notation `<Fx, Fy>`, theta-pair in coordinate notation `(theta1, theta2)`
 * Converts into RPN, substitutes theta-pair and evaluates the RPN equation
+* There exist issues with the '^' operator, and potentially with bracket parsing. To avoid the former, multiply out the base (e.g. `x^2`=>`x*x`).
 
 ###### Testing convergence
-* From preliminary testing, gradient descent converges on the correct minimum for upward-facing surfaces (`alpha=0.01`, 1000 iterations)
+* Gradient descent converges on the correct minimum for upward-facing surfaces (`alpha=0.001`, 10000 iterations)
   * Tested: Circular/elliptical paraboloids in the form: `F(x,y)=a(x-h)^2 + b(y-k)^2 + c`
   * NOTE: It appears gradient descent may converge on saddle points, depending on initial theta-pair
+* Gradient ascent converges on the correct minimum for downward-facing surfaces (`alpha=0.001`, 10000 iterations)
 
 ### Installation Guide:
 ###### Mac OS X:
