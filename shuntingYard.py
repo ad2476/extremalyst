@@ -106,7 +106,7 @@ def shuntingYard(raw_gradient):
 					pass
 				continue
 
-			print "[ERROR] UNEXPECTED OPERATOR"
+			print "[ERROR] UNEXPECTED OPERATOR:" + token
 
 		# Pop remaining operators from stack:
 		while not op_stack.empty():
