@@ -68,6 +68,13 @@ def shuntingYard(Inputted):
 			if token in OPERATORS:
 				if not op_stack.empty():
 					top=op_stack.top()
+
+				if token=="-": # Is this subtraction or a negative symbol?
+					if i==0 or comp[i-1]=="[": # Look behind
+						output.append("-1")
+						op_stack.push("*")
+						continue
+
 				
 				if token=="]":
 					while not op_stack.empty():
@@ -139,6 +146,8 @@ def eval(inputted, coords):
 		if type(token) is float: # If it's a number, add to stack of values
 			values.push(token)
 		elif str.isdigit(token[0]):
+			values.push(float(token))
+		elif token[0]=="-" and str.isdigit(list(token).pop()): # i.e. -2
 			values.push(float(token))
 		elif token in OPERATORS: # Otherwise it's an operator, evaluate
 			if values.size()<2: # not enough values
