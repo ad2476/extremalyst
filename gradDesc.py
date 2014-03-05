@@ -7,8 +7,9 @@ from shuntingYard import *
 
 # dplane = [(x,y), (x,y), (x,y)]
 # theta[j] := theta[j]-alpha*(dF/dtheta[j])
-def gradientDescent(gradient, theta, alpha, num_iters):
+def gradientDescent(gradient, coords, alpha, num_iters):
 	grad=gradient[:]
+	theta=coords[:]
 	# Convert theta to float
 	for i in xrange(len(theta)):
 		theta[i]=float(theta[i])
