@@ -14,6 +14,7 @@ Clone the git repo, run with `python main.py`. For help with this, see below.
 
 ### Current Status:
 * Mostly working basic CAS (computer algebra system)
+  * Does not support mathematical functions or constants (e.g. `ln(x)`, `sin(x)`, `e`, `pi`, etc)
 * Parses gradient vector passed in component notation `<Fx, Fy>`, theta-pair in coordinate notation `(theta1, theta2)`
 * Converts into RPN, substitutes theta-pair and evaluates the RPN equation
 * There exist issues with the '^' operator, and potentially with bracket parsing. To avoid the former, multiply out the base (e.g. `x^2`=>`x*x`).
@@ -21,7 +22,7 @@ Clone the git repo, run with `python main.py`. For help with this, see below.
 ###### Testing convergence
 * Gradient descent converges on the correct minimum for upward-facing surfaces (`alpha=0.001`, 10000 iterations)
   * Tested: Circular/elliptical paraboloids in the form: `F(x,y)=a(x-h)^2 + b(y-k)^2 + c`
-  * NOTE: It appears gradient descent may converge on saddle points, depending on initial theta-pair
+  * NOTE: It appears gradient descent/ascent will not converge on saddle points. `theta1` will converge in one direction, while `theta2` will converge in the other. (Direction meaning ascent or descent)
 * Gradient ascent converges on the correct minimum for downward-facing surfaces (`alpha=0.001`, 10000 iterations)
 
 ### Installation Guide:
@@ -41,3 +42,5 @@ You know what you're doing. If not, RTFM.
 
 ### Planned Features:
 * Calculate all absolute extrema over a rectangular bounded region
+* Add support for `e` and `pi`
+* Add support for `ln(x)`, `sin(x)`, `cos(x)`, `tan(x)`
