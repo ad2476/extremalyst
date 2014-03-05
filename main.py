@@ -82,5 +82,5 @@ ascent = gradientDescent(gradient, theta, -0.01, 10000)
 print "\n\n\nGRADIENT DESCENT RESULTS:"
 print "F"+str(descent)+" = "+str(computeCost(function,descent))
 
-print "\n\n\nGRADIENT ASCENT RESULTS:"
-print "F"+str(ascent)+" = "+str(computeCost(function,ascent))
+print "\nGRADIENT ASCENT RESULTS:"
+print "F"+str(ascent)+" = "+str(computeCost(function,ascent))+"\n"
