@@ -31,7 +31,8 @@ class Stack:
 		return len(self.storage)
 
 # Based on ad2476/Euler: algexp.cpp
-def shuntingYard(raw_gradient):
+def shuntingYard(Inputted):
+	raw_gradient=Inputted
 	# Parsed gradient (list of lists)
 	# gradient = [[shunting yard output 1], [output 2]]
 	gradient = []
@@ -106,7 +107,7 @@ def shuntingYard(raw_gradient):
 					pass
 				continue
 
-			print "[ERROR] UNEXPECTED OPERATOR:" + token
+			print "[ERROR] UNEXPECTED OPERATOR: " + token
 
 		# Pop remaining operators from stack:
 		while not op_stack.empty():
@@ -120,20 +121,22 @@ def shuntingYard(raw_gradient):
 	return gradient
 
 # theta: (x,y)-point on domain plane
-def eval(expression, theta):
+def eval(inputted, coords):
+	expression=inputted[:]
+	theta=coords[:]
 	values=Stack()
 	operands=[0.0, 0.0]
 
 	# Substitute in variables from theta
 	for i, token in enumerate(expression):
 		if token==VARS[0]:
-			expression[i]=theta[0]
+			expression[i]=str(theta[0])
 		elif token==VARS[1]:
-			expression[i]=theta[1]
+			expression[i]=str(theta[1])
 
 	# Parse tokens
 	for token in expression:
-		if str.isdigit(token): # If it's a number, add to stack of values
+		if str.isdigit(token[0]): # If it's a number, add to stack of values
 			values.push(float(token))
 		elif token in OPERATORS: # Otherwise it's an operator, evaluate
 			if values.size()<2: # not enough values

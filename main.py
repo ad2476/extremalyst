@@ -1,6 +1,3 @@
-import shuntingYard
-from shuntingYard import *
-
 import gradDesc
 from gradDesc import *
 
@@ -23,7 +20,7 @@ def componify(vector):
 
 	result.append(temp)
 
-	return tuple(result)
+	return result
 
 ## --- EXECUTION BEGINS HERE --- ##
 # 1. Prompt user for input        #
@@ -65,5 +62,8 @@ print gradient
 
 # DEBUGGING: Evaluate each component of the gradient
 print "[STATUS] Substituting and evaluating..."
-for comp in gradient:
-	print eval(comp, theta)
+#for comp in gradient:
+#	print eval(comp, theta)
+
+print "\n\n\nGRADIENT DESCENT RESULTS:"
+print gradientDescent(gradient, theta, 0.01, 1000)
