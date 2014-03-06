@@ -84,3 +84,7 @@ print "F"+str(descent)+" = "+str(computeCost(function,descent))
 
 print "\nGRADIENT ASCENT RESULTS:"
 print "F"+str(ascent)+" = "+str(computeCost(function,ascent))+"\n"
+
+if ascent==descent:
+    print "Note: This is likely a saddle point!"
+
