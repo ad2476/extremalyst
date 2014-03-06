@@ -79,7 +79,8 @@ print "\nF"+str(tuple(theta))+" = "+str(eval(function, theta))
 descent = gradientDescent(gradient, theta, 0.01, 10000)
 ascent = gradientDescent(gradient, theta, -0.01, 10000)
 
-print "\n\n\nGRADIENT DESCENT RESULTS:"
+print "\n------------------------"
+print "\nGRADIENT DESCENT RESULTS:"
 print "F"+str(descent)+" = "+str(computeCost(function,descent))
 
 print "\nGRADIENT ASCENT RESULTS:"
