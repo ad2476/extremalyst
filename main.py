@@ -30,13 +30,13 @@ def componify(vector):
 
 os.system("clear")
 
-print "Welcome to the extremalyst! Calculate local minima!\n"
+print "Welcome to the extremalyst! Calculate local extrema!\n"
 print "Enter the components of a 2-D gradient vector, along with an initial theta-pair"
 print "\t> A theta-pair is any point on the domain plane of the function F(x,y) in"
 print "\t  the form (theta1, theta2)."
-print "\t> The 2-D gradient vector consists of: gradF=<Fx, Fy>"
 print "\t> Be sure vector components and coordinate pairs are comma-separated!"
 print "\t> Use brackets '[ ]' instead of parentheses '( )' within expressions!"
+print "\t> For more information and usage help, see README"
 
 raw_function = raw_input("[PROMPT] F(x,y) = ")
 
