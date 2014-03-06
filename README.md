@@ -39,10 +39,10 @@ Assuming git is installed: `git clone https://github.com/ad2476/extremalyst.git`
 * There exist issues with the '^' operator, and potentially with bracket parsing. If you run into issues, multiply out the base (e.g. `x^2`=>`x*x`).
 
 ###### Testing convergence
-* Gradient descent converges on the correct minimum for upward-facing surfaces (`alpha=0.001`, 10000 iterations).
+* Gradient descent converges on the correct minimum for upward-facing surfaces (`alpha=0.01`, 10000 iterations).
   * Tested: Circular/elliptical paraboloids in the form: `F(x,y)=a(x-h)^2 + b(y-k)^2 + c`.
   * NOTE: It appears gradient descent/ascent will not converge on saddle points. `theta1` will converge in one direction, while `theta2` will converge in the other. (Direction meaning ascent or descent).
-* Gradient ascent converges on the correct minimum for downward-facing surfaces (`alpha=0.001`, 10000 iterations).
+* Gradient ascent converges on the correct minimum for downward-facing surfaces (`alpha=0.01`, 10000 iterations).
 
 ### Planned Features:
 * Calculate all absolute extrema over a rectangular bounded region.
