@@ -28,7 +28,8 @@ def componify(vector):
 #    theta-pair                   #
 # 3. Parse raw gradient vector    #
 
-os.system("clear")
+if os.name=='posix':
+	os.system("clear")
 
 print "Welcome to the extremalyst! Calculate local extrema!\n"
 print "Enter the components of a 2-D gradient vector, along with an initial theta-pair"
