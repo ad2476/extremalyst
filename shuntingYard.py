@@ -58,8 +58,9 @@ def shuntingYard(Inputted):
 			#print "\tOp stack: "+str(op_stack.list())
 
 			try:
-				while pos<len(comp) and (str.isdigit(comp[pos]) or comp[pos]=="."):
-					pos+=1
+				while pos<len(comp):
+					if str.isdigit(comp[pos]) or comp[pos]==".": pos+=1
+					else: break
 
 				if (pos-i)!=0:
 					token=top.join(comp[i:pos]) # top="" which is our separator
@@ -74,7 +75,8 @@ def shuntingYard(Inputted):
 					i+=pos-i
 					continue
 			except Exception, e:
-				i+=1
+				#print e
+				i+=pos-i
 				continue
 
 			# If token is an operator, add to op_stack
