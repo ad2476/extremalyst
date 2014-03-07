@@ -58,6 +58,9 @@ def gradientDescent(gradient, coords, alpha, num_iters):
 	except OverflowError:
 		print "\t[ERROR] OverflowError: Diverges (alpha = "+str(alpha)+")"
 		return (sys.float_info.max, sys.float_info.max)
+	except ValueError:
+		print "\t[ERROR] Theta="+str(theta)+" passed out of domain"
+		return (sys.float_info.max, sys.float_info.max)
 
 if __name__ == '__main__':
 	import main
