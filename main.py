@@ -89,10 +89,10 @@ print "\nGRADIENT ASCENT RESULTS:"
 acost=computeCost(function,ascent)
 print "F"+str(ascent)+" = "+str(acost)+"\n"
 
-largetheta=(1e10, 1e10)
+largetheta=1e10
 if ascent==descent:
     print "Note: This is likely a saddle point!"
-if sum(ascent)>=sum(largetheta) and sum(descent)<=sum(largetheta): # Ascent diverged, descent converged
+if abs(sum(ascent))>=largetheta and abs(sum(descent))<=largetheta: # Ascent diverged, descent converged
 	print "There exists a local minimum at "+str(descent)
-elif sum(ascent)<=sum(largetheta) and sum(descent)>=sum(largetheta): # Ascent converged, descent diverged
-	print "There exists a local minimum at "+str(descent)
+elif abs(sum(ascent))<=largetheta and abs(sum(descent))>=largetheta: # Ascent converged, descent diverged
+	print "There exists a local maximum at "+str(ascent)
