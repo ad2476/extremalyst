@@ -3,11 +3,6 @@
 import shuntingYard
 from shuntingYard import *
 
-import sys
-
-# F(x,y)=x*x*x+2*x+6*x*y-3*y*y
-# grad-F=3*x*x+2+6*y, 6*x-6*y
-
 # This will run gradient descent/ascent on a function F(x,y) from a given 2-D gradient
 def computeCost(function, theta):
 	try:
@@ -57,9 +52,6 @@ def gradientDescent(gradient, coords, alpha, num_iters):
 		return tuple(theta)
 	except OverflowError:
 		print "\t[ERROR] OverflowError: Diverges (alpha = "+str(alpha)+")"
-		return (sys.float_info.max, sys.float_info.max)
-	except ValueError:
-		print "\t[ERROR] Theta="+str(theta)+" passed out of domain"
 		return (sys.float_info.max, sys.float_info.max)
 
 if __name__ == '__main__':

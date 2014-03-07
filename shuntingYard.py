@@ -1,9 +1,8 @@
 # The shunting yard and evaluation algorithm are based on a previous project,
 # "Euler" (ad2476/Euler). Code in algExp.cpp.
-# NOTE: This very likely inherited a few of the bugs present in that algorithm,
-# and may have introduced some new ones too... NEEDS TO BE THOROUGHLY TESTED
 
 import operator
+import sys
 
 OPERATORS = ("[","]","^","*","/","+","-")
 ops = {"^":operator.pow, "*":operator.mul, "/":operator.div, "+":operator.add, "-":operator.sub}
@@ -183,7 +182,11 @@ def eval(inputted, coords):
 			operands[1]=values.pop()
 			operands[0]=values.pop()
 
-			values.push(ops[token](operands[0], operands[1]))
+			try:
+				values.push(ops[token](operands[0], operands[1]))
+			except (ValueError, ZeroDivisionError):
+				print "\t[ERROR] Theta="+str(theta)+" passed out of domain"
+				return sys.float_info.max
 		else:
 			print "\t[ERROR] Invalid operator: "+str(token)
 

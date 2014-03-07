@@ -90,7 +90,10 @@ acost=computeCost(function,ascent)
 print "F"+str(ascent)+" = "+str(acost)+"\n"
 
 largetheta=1e10
-if ascent==descent:
+maxtheta=(sys.float_info.max, sys.float_info.max)
+if ascent==maxtheta or descent==maxtheta:
+	print "Algorithm diverges!"
+elif ascent==descent:
     print "Note: This is likely a saddle point!"
 if abs(sum(ascent))>=largetheta and abs(sum(descent))<=largetheta: # Ascent diverged, descent converged
 	print "There exists a local minimum at "+str(descent)
