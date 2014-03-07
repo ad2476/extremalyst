@@ -44,14 +44,19 @@ def gradientDescent(gradient, coords, alpha, num_iters):
 		# Check for divergence, also round off theta to 5 decimal points
 		for i in xrange(len(theta)):
 			if theta[j]>1e10:
-				print "Diverges (alpha="+str(alpha)+")"
+				if alpha>0:
+					print "\t[INFO] Descent diverges ",
+				else:
+					print "\t[INFO] Ascent diverges ",
+
+				print "(alpha="+str(alpha)+")"
 				return tuple(theta)
 			else:
 				theta[i]=round(theta[i], 5)
 
 		return tuple(theta)
 	except OverflowError:
-		print "OverflowError: Diverges (alpha = "+str(alpha)+")"
+		print "\t[ERROR] OverflowError: Diverges (alpha = "+str(alpha)+")"
 		return (sys.float_info.max, sys.float_info.max)
 
 if __name__ == '__main__':

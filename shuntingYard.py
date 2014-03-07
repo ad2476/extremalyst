@@ -40,7 +40,7 @@ def shuntingYard(Inputted):
 	# raw_gradient in form: (<string>, <string>)
 	# Parse each <string> as its own algebraic expression
 	for comp in raw_gradient:
-		print "[STATUS] Parsing tokens..."
+		print "\t[STATUS] Parsing tokens..."
 		comp=list(comp)
 
 		output=[] # Sequence of constants and operators
@@ -68,7 +68,7 @@ def shuntingYard(Inputted):
 
 					output.append(token)
 					if pos<len(comp) and (comp[pos] in VARS) or comp[pos]=="[": # Implied multiplication (e.g. '2x' or '2[x+1]')
-						print "[INFO] Implied coef. multiplication assumed"
+						print "\t[INFO] Implied coef. multiplication assumed"
 						comp.insert(pos, "*")
 						#print str(comp)
 					i+=pos-i
@@ -84,7 +84,7 @@ def shuntingYard(Inputted):
 
 				if token=="-": # Is this subtraction or a negative symbol?
 					if i==0 or comp[i-1]=="[": # Look behind
-						print "[INFO] Negative number assumed"
+						print "\t[INFO] Negative number assumed"
 						output.append("-1")
 						op_stack.push("*")
 						i+=1
@@ -101,7 +101,7 @@ def shuntingYard(Inputted):
 
 					try:
 						if (comp[i+1] in VARS) or str.isdigit(comp[i+1]): # Implied multiplication (e.g. '[x+1]y')
-							print "[INFO] Implied coef. multiplication assumed"
+							print "\t[INFO] Implied coef. multiplication assumed"
 							op_stack.push("*")
 					except IndexError, e:
 						pass
@@ -129,21 +129,21 @@ def shuntingYard(Inputted):
 
 				try:
 					if (comp[i+1] in VARS) or comp[i+1]=="[": # Implied multiplication (e.g. 'xy or x[1+y]')
-						print "[INFO] Implied coef. multiplication assumed"
+						print "\t[INFO] Implied coef. multiplication assumed"
 						op_stack.push("*")				
 				except IndexError, e:
 					pass
 				i+=1
 				continue
 
-			print "[ERROR] UNEXPECTED OPERATOR: " + token
+			print "\t[ERROR] UNEXPECTED OPERATOR: " + token
 			i+=1
 
 		# Pop remaining operators from stack:
 		while not op_stack.empty():
 			top=op_stack.pop()
 			if (top=="[") or (top=="]"):
-				print "[ERROR] BRACKET MISMATCH"
+				print "\t[ERROR] BRACKET MISMATCH"
 			output.append(top)
 
 		gradient.append(output)
@@ -174,7 +174,7 @@ def eval(inputted, coords):
 			values.push(float(token))
 		elif token in OPERATORS: # Otherwise it's an operator, evaluate
 			if values.size()<2: # not enough values
-				print "[ERROR] Insufficient values!"
+				print "\t[ERROR] Insufficient values!"
 				return [0]
 
 			# Pop the two operands from the stack
@@ -183,12 +183,12 @@ def eval(inputted, coords):
 
 			values.push(ops[token](operands[0], operands[1]))
 		else:
-			print "[ERROR] Invalid operator: "+str(token)
+			print "\t[ERROR] Invalid operator: "+str(token)
 
 	if values.size()==1:
 		return values.pop()
 	else:
-		print "[ERROR] Value mismatch: "+str(values.list())
+		print "\t[ERROR] Value mismatch: "+str(values.list())
 
 if __name__ == '__main__':
 	import main
