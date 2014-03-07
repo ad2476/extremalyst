@@ -49,7 +49,7 @@ else:
 	function = shuntingYard([raw_function, ""])
 	function = function[0] # remove the trailing "" list produced by shuntingYard()
 
-print function
+#print function
 
 raw_gradient = raw_input("[PROMPT] Gradient vector = ")
 
@@ -59,20 +59,20 @@ raw_gradient = componify(raw_gradient)
 theta = componify(theta)
 
 if len(raw_gradient)!=2 or len(theta)!=2:
-	print "[ERROR] Check entered gradient vector or theta-pair"
+	print "\t[ERROR] Check entered gradient vector or theta-pair"
 	quit()
 
-print raw_gradient,
-print theta
+#print raw_gradient,
+#print theta
 
 # Convert the gradient vector and theta-pair to 2-tuples, parse gradient vector
 gradient = shuntingYard(raw_gradient)
 
-print gradient
+#print gradient
 
 # DEBUGGING: Evaluate each component of the gradient
-print "[STATUS] Substituting and evaluating..."
-print "Initial gradient: ",
+print "\t[STATUS] Substituting and evaluating..."
+print "\nInitial gradient: ",
 for comp in gradient:
 	print str(eval(comp, theta)) + " ",
 print "\nF"+str(tuple(theta))+" = "+str(eval(function, theta))
@@ -82,11 +82,17 @@ ascent = gradientDescent(gradient, theta, -0.01, 10000)
 
 print "\n------------------------"
 print "\nGRADIENT DESCENT RESULTS:"
-print "F"+str(descent)+" = "+str(computeCost(function,descent))
+dcost=computeCost(function,descent)
+print "F"+str(descent)+" = "+str(dcost)
 
 print "\nGRADIENT ASCENT RESULTS:"
-print "F"+str(ascent)+" = "+str(computeCost(function,ascent))+"\n"
+acost=computeCost(function,ascent)
+print "F"+str(ascent)+" = "+str(acost)+"\n"
 
+largetheta=(1e10, 1e10)
 if ascent==descent:
     print "Note: This is likely a saddle point!"
-
+if sum(ascent)>=sum(largetheta) and sum(descent)<=sum(largetheta): # Ascent diverged, descent converged
+	print "There exists a local minimum at "+str(descent)
+elif sum(ascent)<=sum(largetheta) and sum(descent)>=sum(largetheta): # Ascent converged, descent diverged
+	print "There exists a local minimum at "+str(descent)
