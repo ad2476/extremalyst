@@ -3,6 +3,8 @@ Extremalyst (Extrema Analyst)
 
 Find local extrema of surfaces in 3-space using gradient ascent/descent.
 
+Note: If you encounter a bug or any unexpected behaviour, please raise an issue so that it may be addressed.
+
 ### Installation Guide:
 Clone the git repo, run with `python main.py`.
 ###### Mac OS X:
@@ -30,15 +32,16 @@ Assuming git is installed: `git clone https://github.com/ad2476/extremalyst.git`
 
 ![alt text](https://raw.github.com/ad2476/extremalyst/master/img/ex1.png "Example 1")
 
-### Current Status:
+### Features:
 * Mostly working basic CAS (computer algebra system).
-  * Does not support mathematical functions or constants (e.g. `ln(x)`, `sin(x)`, `e`, `pi`, etc).
 * Parses gradient vector passed in component notation `<Fx, Fy>`, theta-pair in coordinate notation `(theta1, theta2)`.
 * Converts into RPN and can evaluate the resultant RPN expression.
 * Uses gradient descent to calculate a local minimum, and gradient ascent to calculate a maximum. Evaluates `F(x,y`) for the solved `theta`.
-* There exist issues with the '^' operator, and potentially with bracket parsing. If you run into issues, multiply out the base (e.g. `x^2`=>`x*x`).
 
-###### Testing convergence
+### Status:
+Does not support mathematical functions or constants (e.g. `ln(x)`, `sin(x)`, `e`, `pi`, etc). 
+
+###### Tests of algorithm convergence
 * Gradient descent converges on the correct minimum for upward-facing surfaces (`alpha=0.01`, 10000 iterations).
   * Tested: Circular/elliptical paraboloids in the form: `F(x,y)=a(x-h)^2 + b(y-k)^2 + c`.
   * NOTE: It appears gradient descent/ascent will not converge on saddle points. `theta1` will converge in one direction, while `theta2` will converge in the other. (Direction meaning ascent or descent).
