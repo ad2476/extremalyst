@@ -46,16 +46,16 @@ def shuntingYard(Inputted):
 		output=[] # Sequence of constants and operators
 		op_stack=Stack() # Working stack of operators
 		i=0
-		print len(comp)
+		#print len(comp)
 		while i < len(comp):
 			token=comp[i]
 			pos=i # position of last digit in token
 			top=""
-			print i
-			print "Token: "+token
-			print "Comp: "+str(comp)
-			print "Output: "+str(output)
-			print "\tOp stack: "+str(op_stack.list())
+			#print i
+			#print "Token: "+token
+			#print "Comp: "+str(comp)
+			#print "Output: "+str(output)
+			#print "\tOp stack: "+str(op_stack.list())
 
 			try:
 				while pos<len(comp) and (str.isdigit(comp[pos]) or comp[pos]=="."):
@@ -111,7 +111,7 @@ def shuntingYard(Inputted):
 				elif token=="[":
 					pass
 				elif PRECEDENCE[top]>=PRECEDENCE[token]:
-					print "Top: "+top
+					#print "Top: "+top
 					while not op_stack.empty():
 						top=op_stack.pop()
 
