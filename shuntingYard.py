@@ -41,31 +41,40 @@ def shuntingYard(Inputted):
 	# Parse each <string> as its own algebraic expression
 	for comp in raw_gradient:
 		print "[STATUS] Parsing tokens..."
+		comp=list(comp)
 
 		output=[] # Sequence of constants and operators
 		op_stack=Stack() # Working stack of operators
-		top=""
-		iterable=iter(xrange(len(comp)))
-		for i in iterable:
+		i=0
+		print len(comp)
+		while i < len(comp):
 			token=comp[i]
 			pos=i # position of last digit in token
-
-			#print output
-			#print "\t"+str(op_stack.list())
+			top=""
+			print i
+			print "Token: "+token
+			print "Comp: "+str(comp)
+			print "Output: "+str(output)
+			print "\tOp stack: "+str(op_stack.list())
 
 			try:
 				while pos<len(comp) and (str.isdigit(comp[pos]) or comp[pos]=="."):
 					pos+=1
 
 				if (pos-i)!=0:
-					token=comp[i:pos]
+					token=top.join(comp[i:pos]) # top="" which is our separator
+					#print "Token: "+token	
+					#print "Pos: "+str(pos)
+
 					output.append(token)
-					if (comp[pos] in VARS) or comp[pos]=="[": # Implied multiplication (e.g. '2x' or '2[x+1]')
+					if pos<len(comp) and (comp[pos] in VARS) or comp[pos]=="[": # Implied multiplication (e.g. '2x' or '2[x+1]')
 						print "[INFO] Implied coef. multiplication assumed"
-						op_stack.push("*")
-					[iterable.next() for x in xrange(1, pos-i)]
+						comp.insert(pos, "*")
+						#print str(comp)
+					i+=pos-i
 					continue
-			except IndexError, e:
+			except Exception, e:
+				i+=1
 				continue
 
 			# If token is an operator, add to op_stack
@@ -78,6 +87,7 @@ def shuntingYard(Inputted):
 						print "[INFO] Negative number assumed"
 						output.append("-1")
 						op_stack.push("*")
+						i+=1
 						continue
 
 				
@@ -96,17 +106,23 @@ def shuntingYard(Inputted):
 					except IndexError, e:
 						pass
 
+					i+=1
 					continue
 				elif token=="[":
 					pass
 				elif PRECEDENCE[top]>=PRECEDENCE[token]:
-					op_stack.pop()
-					if top!="[":
-						output.append(top)
+					print "Top: "+top
+					while not op_stack.empty():
+						top=op_stack.pop()
+
+						if top!="[" and PRECEDENCE[top]>=PRECEDENCE[token]:
+							output.append(top)
 									
 				op_stack.push(token)
+				i+=1
 				continue
 			elif token==" ":
+				i+=1
 				continue
 			elif token in VARS: # It's a variable
 				output.append(token)
@@ -117,9 +133,11 @@ def shuntingYard(Inputted):
 						op_stack.push("*")				
 				except IndexError, e:
 					pass
+				i+=1
 				continue
 
 			print "[ERROR] UNEXPECTED OPERATOR: " + token
+			i+=1
 
 		# Pop remaining operators from stack:
 		while not op_stack.empty():
