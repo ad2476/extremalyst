@@ -112,7 +112,7 @@ def shuntingYard(Inputted):
 					pass
 				elif PRECEDENCE[top]>=PRECEDENCE[token]:
 					#print "Top: "+top
-					while not op_stack.empty():
+					while (not op_stack.empty()) and op_stack.top()!="[":
 						top=op_stack.pop()
 
 						if top!="[" and PRECEDENCE[top]>=PRECEDENCE[token]:
